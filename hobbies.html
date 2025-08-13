@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hobbies</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f1f1;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background-color: #38c4c4;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        header img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #333;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            padding: 20px;
+            display: block;
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #38c4c4;
+            transform: scale(1.05);
+        }
+
+        /* Main Content */
+        main {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        section {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        /* Circular Hobby Item */
+        article {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 250px;
+            width: 250px;
+            margin: 0 auto;
+        }
+
+        article h3 {
+            color: #38c4c4;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        article p {
+            color: #777;
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+
+        article:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 1rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Gowri D's Hobbies</h1>
+        <img src="pic.jpeg" alt="Gowri D">
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Bio</a></li>
+            <li><a href="education.html">Education</a></li>
+            <li><a href="skills.html">Skills</a></li>
+            <li><a href="hobbies.html">Hobbies</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section>
+            <article>
+                <h3>Reading Books</h3>
+                <p>Reading is a great way to explore new ideas, worlds, and improve knowledge while relaxing.</p>
+            </article>
+
+            <article>
+                <h3>Traveling</h3>
+                <p>Traveling opens up new perspectives, broadens horizons, and lets me experience different cultures.</p>
+            </article>
+
+            <article>
+                <h3>Photography</h3>
+                <p>Photography allows me to capture beautiful moments and preserve them as memories for life.</p>
+            </article>
+
+            <article>
+                <h3>Painting</h3>
+                <p>Painting is my way of expressing creativity and emotions, turning ideas into visual art.</p>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Gowri D. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
