@@ -454,6 +454,61 @@
         height: 85vh;
       }
     }
+    
+    @media (pointer: fine) {
+      body {
+        cursor: none;
+      }
+    }
+    
+    .cursor-dot {
+      position: fixed;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffffff 0%, var(--primary-light) 40%, var(--primary) 70%);
+      box-shadow: 0 0 12px rgba(139, 92, 246, 0.8);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 10000;
+      mix-blend-mode: difference;
+    }
+    
+    .cursor-glow {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0) 60%);
+      filter: blur(10px);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+    }
+    
+    .sparkle {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      box-shadow: 0 0 10px rgba(139, 92, 246, 0.6);
+      opacity: 0.9;
+      transform: translate(-50%, -50%) scale(1);
+      animation: sparkleFade 600ms ease-out forwards;
+      pointer-events: none;
+      z-index: 9998;
+    }
+    
+    @keyframes sparkleFade {
+      to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.3);
+        filter: blur(2px);
+      }
+    }
   </style>
 </head>
 <body>
@@ -490,7 +545,7 @@
         <i class="fas fa-envelope"></i> Contact
         <span class="active-indicator"></span>
       </a>
-      <a href="#" id="resume-btn" class="btn btn-outline">
+      <a href="Resume.pdf" id="resume-btn" class="btn btn-outline">
         <i class="fas fa-file-alt mr-2"></i> Resume
       </a>
     </div>
@@ -523,7 +578,7 @@
       <a href="#contact" class="nav-link">
         <i class="fas fa-envelope mr-2"></i> Contact
       </a>
-      <a href="#" id="mobile-resume-btn" class="nav-link">
+      <a href="Resume.pdf" id="mobile-resume-btn" class="nav-link">
         <i class="fas fa-file-alt mr-2"></i> Resume
       </a>
     </div>
@@ -735,7 +790,7 @@
               <span class="skill-badge">Node.js</span>
               <span class="skill-badge">MongoDB</span>
             </div>
-            <a href="https://gowri0504.github.io/Digital-Wallet/" class="btn btn-outline w-full">View Project</a>
+            <a href="https://gowri0504.github.io/Digital-Wallet/" class="btn btn-outline w-full" target="_blank" rel="noopener">View Project</a>
           </div>
         </div>
         
@@ -754,7 +809,7 @@
               <span class="skill-badge">JavaScript</span>
               <span class="skill-badge">MySQL</span>
             </div>
-            <a href="https://gowri0504.github.io/Railway-Management/" class="btn btn-outline w-full">View Project</a>
+            <a href="https://gowri0504.github.io/Railway-Management/" class="btn btn-outline w-full" target="_blank" rel="noopener">View Project</a>
           </div>
         </div>
         
@@ -774,7 +829,7 @@
               <span class="skill-badge">Chart.js</span>
               <span class="skill-badge">LocalStorage</span>
             </div>
-            <a href="https://gowri0504.github.io/Personal-expense-tracker/" class="btn btn-outline w-full">View Project</a>
+            <a href="https://gowri0504.github.io/Personal-expense-tracker/" class="btn btn-outline w-full" target="_blank" rel="noopener">View Project</a>
           </div>
         </div>
         
@@ -793,26 +848,28 @@
               <span class="skill-badge">Java</span>
               <span class="skill-badge">OOP</span>
             </div>
-            <a href="https://gowri0504.github.io/ChessGame/" class="btn btn-outline w-full">View Project</a>
+            <a href="https://gowri0504.github.io/ChessGame/" class="btn btn-outline w-full" target="_blank" rel="noopener">View Project</a>
           </div>
         </div>
         
         <!-- Project 5 -->
         <div class="project-card glass">
           <div class="h-48 overflow-hidden">
-            <img src='sc.png' alt="Symptom Checker" class="project-img">
+            <img src='cp.png' alt="Symptom Checker" class="project-img">
           </div>
           <div class="p-6 flex-grow">
             <div class="flex justify-between items-start mb-4">
-              <h3 class="text-xl font-bold">Symptom Checker</h3>
+              <h3 class="text-xl font-bold">CrowdFunding Platform</h3>
               <span class="px-3 py-1 bg-indigo-900/50 text-indigo-300 rounded-full text-sm">AI/ML</span>
             </div>
-            <p class="text-gray-300 mb-4">A Node.js-based tool for predicting illness from symptoms using machine learning.</p>
+            <p class="text-gray-300 mb-4">A Node.js-based platform for crowd funding projects, enabling users to raise funds for causes they care about.</p>
             <div class="flex flex-wrap gap-2 mb-6">
               <span class="skill-badge">Node.js</span>
               <span class="skill-badge">Express</span>
+              <span class="skill-badge">MongoDB</span>
+              <span class="skill-badge">React</span>
             </div>
-            <a href="#" class="btn btn-outline w-full">On Progress</a>
+            <a href="https://github.com/Gowri0504/crowdfunding-platform.git" class="btn btn-outline w-full" target="_blank" rel="noopener">View Project</a>
           </div>
         </div>
         
@@ -832,7 +889,7 @@
               <span class="skill-badge">Pygame</span>
               <span class="skill-badge">OOP</span>
             </div>
-            <a href="https://gowri0504.github.io/Spin-a-yarn/" class="btn btn-outline w-full">View Project</a>
+            <a href="https://gowri0504.github.io/Spin-a-yarn/" class="btn btn-outline w-full" target="_blank" rel="noopener">View Project</a>
           </div>
         </div>
       </div>
@@ -1080,7 +1137,7 @@
       <i class="fas fa-times"></i>
     </span>
     <div class="resume-modal-content">
-      <iframe class="resume-iframe" src="resume.pdf"></iframe>
+      <iframe class="resume-iframe" src="Resume.pdf"></iframe>
     </div>
   </div>
   
@@ -1303,6 +1360,53 @@
           }
         });
       });
+      
+      if (window.matchMedia('(pointer: fine)').matches) {
+        const dot = document.createElement('div');
+        dot.className = 'cursor-dot';
+        const glow = document.createElement('div');
+        glow.className = 'cursor-glow';
+        document.body.appendChild(glow);
+        document.body.appendChild(dot);
+        let lastX = 0, lastY = 0;
+        function getSparkleColor() {
+          const colors = ['#c4b5fd', '#8b5cf6', '#0ea5e9', '#7e22ce'];
+          return colors[Math.floor(Math.random() * colors.length)];
+        }
+        function onMove(e) {
+          const x = e.clientX;
+          const y = e.clientY;
+          dot.style.left = x + 'px';
+          dot.style.top = y + 'px';
+          glow.style.left = x + 'px';
+          glow.style.top = y + 'px';
+          glow.style.opacity = '1';
+          if (Math.hypot(x - lastX, y - lastY) > 12) {
+            const s = document.createElement('div');
+            s.className = 'sparkle';
+            const jitterX = x + (Math.random() * 8 - 4);
+            const jitterY = y + (Math.random() * 8 - 4);
+            s.style.left = jitterX + 'px';
+            s.style.top = jitterY + 'px';
+            const c1 = getSparkleColor();
+            const c2 = getSparkleColor();
+            s.style.background = 'linear-gradient(135deg, ' + c1 + ', ' + c2 + ')';
+            document.body.appendChild(s);
+            s.addEventListener('animationend', function() { s.remove(); });
+            lastX = x; lastY = y;
+          }
+        }
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('mousedown', function() {
+          dot.style.transform = 'translate(-50%, -50%) scale(1.4)';
+        });
+        window.addEventListener('mouseup', function() {
+          dot.style.transform = 'translate(-50%, -50%) scale(1)';
+        });
+        window.addEventListener('mouseleave', function() {
+          glow.style.opacity = '0';
+        });
+      }
     });
   </script>
 </body>
