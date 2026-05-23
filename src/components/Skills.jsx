@@ -77,7 +77,7 @@ const Skills = () => {
   const [selectedCerty, setSelectedCerty] = useState(null)
 
   return (
-    <section id="skills" className="py-20 px-4 relative">
+    <section id="skills" className="py-16 md:py-20 px-4 relative">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -90,7 +90,7 @@ const Skills = () => {
         </motion.div>
 
         {/* Skills Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-12 md:mb-16">
           {skillCategories.map((category, catIndex) => (
             <motion.div
               key={category.title}
@@ -98,18 +98,18 @@ const Skills = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: catIndex * 0.1 }}
               viewport={{ once: true }}
-              className="glass p-6 rounded-2xl hover:border-primary/30 transition-all duration-300"
+              className="glass p-5 md:p-6 rounded-2xl hover:border-primary/30 transition-all duration-300"
             >
               {/* Category Header */}
-              <div className="flex items-center gap-3 mb-6">
-                <div className={`p-2 rounded-lg ${category.color === 'primary' ? 'bg-primary/20' : 'bg-secondary/20'}`}>
-                  <category.icon className={`w-5 h-5 ${category.color === 'primary' ? 'text-primary-light' : 'text-secondary-light'}`} />
+              <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6">
+                <div className={`p-1.5 md:p-2 rounded-lg ${category.color === 'primary' ? 'bg-primary/20' : 'bg-secondary/20'}`}>
+                  <category.icon className={`w-4 h-4 md:w-5 md:h-5 ${category.color === 'primary' ? 'text-primary-light' : 'text-secondary-light'}`} />
                 </div>
-                <h3 className="text-xl font-display font-bold text-gray-200">{category.title}</h3>
+                <h3 className="text-lg md:text-xl font-display font-bold text-gray-200">{category.title}</h3>
               </div>
 
               {/* Skills */}
-              <div className="space-y-4">
+              <div className="space-y-3 md:space-y-4">
                 {category.skills.map((skill, index) => (
                   <motion.div
                     key={skill.name}
@@ -121,16 +121,16 @@ const Skills = () => {
                     onHoverStart={() => setHoveredSkill(skill.name)}
                     onHoverEnd={() => setHoveredSkill(null)}
                   >
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <span className="text-lg">{skill.icon}</span>
-                        <span className="text-sm font-medium text-gray-300">{skill.name}</span>
+                    <div className="flex items-center justify-between mb-1.5 md:mb-2">
+                      <div className="flex items-center gap-1.5 md:gap-2">
+                        <span className="text-base md:text-lg">{skill.icon}</span>
+                        <span className="text-xs md:text-sm font-medium text-gray-300">{skill.name}</span>
                       </div>
                       <span className="text-xs text-gray-500">{skill.level}%</span>
                     </div>
 
                     {/* Progress Bar */}
-                    <div className="h-2 bg-slate-700/50 rounded-full overflow-hidden">
+                    <div className="h-1.5 md:h-2 bg-slate-700/50 rounded-full overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
                         whileInView={{ width: `${skill.level}%` }}
@@ -156,16 +156,16 @@ const Skills = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="glass p-6 rounded-2xl"
+          className="glass p-5 md:p-6 rounded-2xl"
         >
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 rounded-lg bg-primary/20">
-              <Award className="w-5 h-5 text-primary-light" />
+          <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6">
+            <div className="p-1.5 md:p-2 rounded-lg bg-primary/20">
+              <Award className="w-4 h-4 md:w-5 md:h-5 text-primary-light" />
             </div>
-            <h3 className="text-2xl font-display font-bold text-gray-200">Certifications</h3>
+            <h3 className="text-xl md:text-2xl font-display font-bold text-gray-200">Certifications</h3>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
             {certifications.map((cert, index) => (
               <motion.div
                 key={cert.title}
@@ -173,11 +173,11 @@ const Skills = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 viewport={{ once: true }}
-                className="glass-light p-4 rounded-xl cursor-pointer hover:border-primary/30 transition-all duration-300 group"
+                className="glass-light p-3 md:p-4 rounded-xl cursor-pointer hover:border-primary/30 transition-all duration-300 group"
                 onClick={() => setSelectedCerty(cert)}
                 whileHover={{ scale: 1.05, y: -5 }}
               >
-                <div className="aspect-[4/3] rounded-lg overflow-hidden mb-3 border border-slate-700/50">
+                <div className="aspect-[4/3] rounded-lg overflow-hidden mb-2 md:mb-3 border border-slate-700/50">
                   <img
                     src={cert.image}
                     alt={cert.title}
@@ -187,7 +187,7 @@ const Skills = () => {
                     }}
                   />
                 </div>
-                <h4 className="text-sm font-semibold text-gray-200 mb-1 line-clamp-2">{cert.title}</h4>
+                <h4 className="text-xs md:text-sm font-semibold text-gray-200 mb-0.5 md:mb-1 line-clamp-2">{cert.title}</h4>
                 <p className="text-xs text-gray-500">{cert.date}</p>
               </motion.div>
             ))}
@@ -207,7 +207,7 @@ const Skills = () => {
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}
-              className="max-w-4xl w-full glass p-4 rounded-xl"
+              className="max-w-4xl w-full glass p-3 md:p-4 rounded-xl"
               onClick={(e) => e.stopPropagation()}
             >
               <img
@@ -218,9 +218,9 @@ const Skills = () => {
                   e.target.src = 'https://images.pexels.com/photos/5428299/pexels-photo-5428299.jpeg?auto=compress&cs=tinysrgb&w=800'
                 }}
               />
-              <div className="mt-3 text-center">
-                <h4 className="text-lg font-semibold text-gray-200">{selectedCerty.title}</h4>
-                <p className="text-sm text-gray-400">{selectedCerty.date}</p>
+              <div className="mt-2 md:mt-3 text-center">
+                <h4 className="text-base md:text-lg font-semibold text-gray-200">{selectedCerty.title}</h4>
+                <p className="text-xs md:text-sm text-gray-400">{selectedCerty.date}</p>
               </div>
             </motion.div>
           </motion.div>

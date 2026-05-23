@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
 
 @layer base {
   * {
@@ -58,12 +58,12 @@
   }
 
   .section-title {
-    @apply text-4xl md:text-5xl font-display font-bold text-center mb-16 relative;
+    @apply text-3xl md:text-4xl lg:text-5xl font-display font-bold text-center mb-12 md:mb-16 relative;
   }
 
   .section-title::after {
     content: '';
-    @apply absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-primary to-secondary rounded-full;
+    @apply absolute -bottom-3 md:-bottom-4 left-1/2 transform -translate-x-1/2 w-16 md:w-24 h-0.5 md:h-1 bg-gradient-to-r from-primary to-secondary rounded-full;
   }
 }
 

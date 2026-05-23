@@ -119,7 +119,7 @@ const Navbar = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <Send className="w-4 h-4" />
-                Hire Me
+                Let's Talk
               </motion.button>
             </div>
           </div>
@@ -186,7 +186,7 @@ const Navbar = () => {
                   className="btn-primary w-full justify-center"
                 >
                   <Send className="w-4 h-4" />
-                  Hire Me
+                  Let's Talk
                 </motion.button>
               </div>
 

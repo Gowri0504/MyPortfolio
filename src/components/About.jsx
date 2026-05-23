@@ -32,7 +32,7 @@ const About = () => {
   ]
 
   return (
-    <section id="about" className="py-20 px-4 relative">
+    <section id="about" className="py-16 md:py-20 px-4 relative">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -44,18 +44,18 @@ const About = () => {
           About Me
         </motion.div>
 
-        <div className="grid lg:grid-cols-5 gap-8">
+        <div className="grid lg:grid-cols-5 gap-6 md:gap-8">
           {/* Main About Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="lg:col-span-3 glass p-8 rounded-2xl"
+            className="lg:col-span-3 glass p-6 md:p-8 rounded-2xl"
           >
-            <h3 className="text-2xl font-display font-bold mb-6 text-primary-light">Who I Am</h3>
+            <h3 className="text-xl md:text-2xl font-display font-bold mb-4 md:mb-6 text-primary-light">Who I Am</h3>
 
-            <div className="space-y-6 text-gray-300 leading-relaxed">
+            <div className="space-y-4 md:space-y-6 text-gray-300 leading-relaxed text-sm md:text-base">
               <p>
                 I am an Information Technology student passionate about building scalable and
                 impactful applications that solve real-world problems. My interests lie in
@@ -75,7 +75,7 @@ const About = () => {
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-6 md:mt-8">
               {stats.map((stat, index) => (
                 <motion.div
                   key={stat.label}
@@ -83,10 +83,10 @@ const About = () => {
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
                   viewport={{ once: true }}
-                  className="glass-light p-4 rounded-xl text-center hover:border-primary/30 transition-all duration-300"
+                  className="glass-light p-3 md:p-4 rounded-xl text-center hover:border-primary/30 transition-all duration-300"
                 >
-                  <div className="text-3xl font-bold gradient-text mb-1">{stat.value}</div>
-                  <div className="text-sm text-gray-400">{stat.label}</div>
+                  <div className="text-2xl md:text-3xl font-bold gradient-text mb-0.5 md:mb-1">{stat.value}</div>
+                  <div className="text-xs md:text-sm text-gray-400">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
@@ -98,15 +98,15 @@ const About = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
-            className="lg:col-span-2 glass p-8 rounded-2xl"
+            className="lg:col-span-2 glass p-6 md:p-8 rounded-2xl"
           >
-            <h3 className="text-2xl font-display font-bold mb-8 text-primary-light">Education</h3>
+            <h3 className="text-xl md:text-2xl font-display font-bold mb-6 md:mb-8 text-primary-light">Education</h3>
 
             <div className="relative">
               {/* Timeline Line - Only up to the last item */}
               <div className="absolute left-[19px] top-[35px] bottom-[35px] w-0.5 bg-gradient-to-b from-primary via-secondary to-transparent" />
 
-              <div className="space-y-8">
+              <div className="space-y-6 md:space-y-8">
                 {timelineData.map((item, index) => (
                   <motion.div
                     key={index}
@@ -120,13 +120,13 @@ const About = () => {
                     <div className="absolute left-[7px] top-[8px] w-3 h-3 rounded-full bg-gradient-to-br from-primary to-secondary border-2 border-slate-900 group-hover:scale-125 transition-all duration-300 shadow-[0_0_10px_rgba(139,92,246,0.5)]" />
 
                     {/* Content */}
-                    <div className="glass-light p-4 rounded-lg hover:border-primary/30 transition-all duration-300">
-                      <div className="flex items-start gap-3">
-                        <item.icon className="w-5 h-5 text-primary-light mt-0.5 flex-shrink-0" />
+                    <div className="glass-light p-3 md:p-4 rounded-lg hover:border-primary/30 transition-all duration-300">
+                      <div className="flex items-start gap-2 md:gap-3">
+                        <item.icon className="w-4 h-4 md:w-5 md:h-5 text-primary-light mt-0.5 flex-shrink-0" />
                         <div>
-                          <h4 className="text-lg font-bold text-gray-200">{item.title}</h4>
-                          <p className="text-sm text-primary-light mt-1">{item.subtitle}</p>
-                          <p className="text-xs text-gray-500 mt-1">{item.period}</p>
+                          <h4 className="text-base md:text-lg font-bold text-gray-200">{item.title}</h4>
+                          <p className="text-xs md:text-sm text-primary-light mt-0.5 md:mt-1">{item.subtitle}</p>
+                          <p className="text-xs text-gray-500 mt-0.5 md:mt-1">{item.period}</p>
                         </div>
                       </div>
                     </div>

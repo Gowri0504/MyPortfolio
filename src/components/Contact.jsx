@@ -48,7 +48,7 @@ const Contact = () => {
   ]
 
   return (
-    <section id="contact" className="py-20 px-4 relative bg-gradient-to-t from-slate-900/50 to-transparent">
+    <section id="contact" className="py-16 md:py-20 px-4 relative bg-gradient-to-t from-slate-900/50 to-transparent">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -60,24 +60,24 @@ const Contact = () => {
           Get In Touch
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid lg:grid-cols-2 gap-6 md:gap-8">
           {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="space-y-6"
+            className="space-y-4 md:space-y-6"
           >
-            <div className="glass p-6 rounded-2xl">
-              <h3 className="text-2xl font-display font-bold mb-4 text-primary-light">Let's Connect</h3>
-              <p className="text-gray-400 mb-8 leading-relaxed">
+            <div className="glass p-5 md:p-6 rounded-2xl">
+              <h3 className="text-xl md:text-2xl font-display font-bold mb-3 md:mb-4 text-primary-light">Let's Connect</h3>
+              <p className="text-sm md:text-base text-gray-400 mb-6 md:mb-8 leading-relaxed">
                 Have a project in mind or want to discuss opportunities? Feel free to reach out!
                 I'm always open to new ideas and collaborations.
               </p>
 
               {/* Contact Details */}
-              <div className="space-y-4 mb-8">
+              <div className="space-y-3 md:space-y-4 mb-6 md:mb-8">
                 {contactInfo.map((info, index) => (
                   <motion.a
                     key={info.label}
@@ -86,22 +86,22 @@ const Contact = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
                     viewport={{ once: true }}
-                    className="flex items-center gap-4 glass-light p-4 rounded-xl group hover:border-primary/30 transition-all duration-300"
+                    className="flex items-center gap-3 md:gap-4 glass-light p-3 md:p-4 rounded-xl group hover:border-primary/30 transition-all duration-300"
                     whileHover={{ scale: 1.02, x: 5 }}
                   >
-                    <div className="w-12 h-12 rounded-full gradient-bg flex items-center justify-center shadow-lg shadow-primary/30">
-                      <info.icon className="w-5 h-5 text-white" />
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full gradient-bg flex items-center justify-center shadow-lg shadow-primary/30 flex-shrink-0">
+                      <info.icon className="w-4 h-4 md:w-5 md:h-5 text-white" />
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold text-gray-400">{info.label}</h4>
-                      <p className="text-gray-200">{info.value}</p>
+                      <h4 className="text-xs md:text-sm font-semibold text-gray-400">{info.label}</h4>
+                      <p className="text-sm md:text-base text-gray-200">{info.value}</p>
                     </div>
                   </motion.a>
                 ))}
               </div>
 
               {/* Social Links */}
-              <div className="flex gap-3">
+              <div className="flex gap-2 md:gap-3">
                 {socialLinks.map((social, index) => (
                   <motion.a
                     key={social.label}
@@ -112,12 +112,12 @@ const Contact = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.3 + index * 0.1 }}
                     viewport={{ once: true }}
-                    className={`p-3 rounded-lg glass-light transition-all duration-300 group ${social.color}`}
+                    className={`p-2.5 md:p-3 rounded-lg glass-light transition-all duration-300 group ${social.color}`}
                     whileHover={{ scale: 1.1, y: -3 }}
                     whileTap={{ scale: 0.9 }}
                     aria-label={social.label}
                   >
-                    <social.icon className="w-5 h-5 text-gray-400 group-hover:text-current" />
+                    <social.icon className="w-4 h-4 md:w-5 md:h-5 text-gray-400 group-hover:text-current" />
                   </motion.a>
                 ))}
               </div>
@@ -131,42 +131,42 @@ const Contact = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <form onSubmit={handleSubmit} className="glass p-6 rounded-2xl space-y-6">
+            <form onSubmit={handleSubmit} className="glass p-5 md:p-6 rounded-2xl space-y-4 md:space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">Name</label>
+                <label className="block text-xs md:text-sm font-medium text-gray-400 mb-1.5 md:mb-2">Name</label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full bg-slate-800/50 border border-slate-700/50 rounded-lg px-4 py-3 text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300"
+                  className="w-full bg-slate-800/50 border border-slate-700/50 rounded-lg px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300"
                   placeholder="Your name"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">Email</label>
+                <label className="block text-xs md:text-sm font-medium text-gray-400 mb-1.5 md:mb-2">Email</label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full bg-slate-800/50 border border-slate-700/50 rounded-lg px-4 py-3 text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300"
+                  className="w-full bg-slate-800/50 border border-slate-700/50 rounded-lg px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300"
                   placeholder="your@email.com"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-400 mb-2">Message</label>
+                <label className="block text-xs md:text-sm font-medium text-gray-400 mb-1.5 md:mb-2">Message</label>
                 <textarea
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
                   required
                   rows="4"
-                  className="w-full bg-slate-800/50 border border-slate-700/50 rounded-lg px-4 py-3 text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300 resize-none"
+                  className="w-full bg-slate-800/50 border border-slate-700/50 rounded-lg px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300 resize-none"
                   placeholder="Your message..."
                 />
               </div>
@@ -174,7 +174,7 @@ const Contact = () => {
               <motion.button
                 type="submit"
                 disabled={isSubmitting || isSubmitted}
-                className="w-full btn-primary relative overflow-hidden"
+                className="w-full btn-primary relative overflow-hidden text-sm md:text-base"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -185,12 +185,12 @@ const Contact = () => {
                   </span>
                 ) : isSubmitted ? (
                   <span className="flex items-center justify-center gap-2">
-                    <Check className="w-5 h-5" />
+                    <Check className="w-4 md:w-5 h-4 md:h-5" />
                     Message Sent!
                   </span>
                 ) : (
                   <span className="flex items-center justify-center gap-2">
-                    <Send className="w-5 h-5" />
+                    <Send className="w-4 md:w-5 h-4 md:h-5" />
                     Send Message
                   </span>
                 )}
