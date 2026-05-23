@@ -69,7 +69,7 @@ const Contact = () => {
   const socialLinks = [
     { icon: Github, href: 'https://github.com/Gowri0504', label: 'GitHub', color: 'hover:text-gray-200' },
     { icon: Linkedin, href: 'https://www.linkedin.com/in/gowri-dharmaraj/', label: 'LinkedIn', color: 'hover:text-blue-400' },
-    { icon: Code2, href: 'https://leetcode.com/u/Gowri0504/', label: 'LeetCode', color: 'hover:text-yellow-400' },
+    { icon: Code, href: 'https://leetcode.com/u/gowri_d/', label: 'LeetCode', color: 'hover:text-yellow-400' },
     { icon: Mail, href: 'mailto:gowri.d.tech@gmail.com', label: 'Email', color: 'hover:text-red-400' },
   ]
 
