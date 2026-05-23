@@ -1,36 +1,62 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, MapPin, Github, Linkedin, Code, Send, Check } from 'lucide-react'
+import { Mail, MapPin, Github, Linkedin, Code, Send, Check, AlertCircle } from 'lucide-react'
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [error, setError] = useState('')
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
+    setError('')
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setError('')
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    try {
+      // Using FormSubmit.co service (free, no signup required)
+      const response = await fetch('https://formsubmit.co/ajax/gowri.d.tech@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: `Portfolio Contact from ${formData.name}`,
+          _captcha: 'false',
+          _template: 'table'
+        })
+      })
 
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-    setFormData({ name: '', email: '', message: '' })
-
-    setTimeout(() => setIsSubmitted(false), 5000)
+      if (response.ok) {
+        setIsSubmitted(true)
+        setFormData({ name: '', email: '', message: '' })
+        setTimeout(() => setIsSubmitted(false), 5000)
+      } else {
+        throw new Error('Failed to send message')
+      }
+    } catch (err) {
+      setError('Failed to send message. Please try again or email directly.')
+      setTimeout(() => setError(''), 5000)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const contactInfo = [
     {
       icon: Mail,
       label: 'Email',
-      value: 'gowrid.23it@kongu.edu',
-      href: 'mailto:gowrid.23it@kongu.edu',
+      value: 'gowri.d.tech@gmail.com',
+      href: 'mailto:gowri.d.tech@gmail.com',
     },
     {
       icon: MapPin,
@@ -44,7 +70,7 @@ const Contact = () => {
     { icon: Github, href: 'https://github.com/Gowri0504', label: 'GitHub', color: 'hover:text-gray-200' },
     { icon: Linkedin, href: 'https://www.linkedin.com/in/gowri-dharmaraj/', label: 'LinkedIn', color: 'hover:text-blue-400' },
     { icon: Code, href: 'https://leetcode.com/u/gowri_d/', label: 'LeetCode', color: 'hover:text-yellow-400' },
-    { icon: Mail, href: 'mailto:gowrid.23it@kongu.edu', label: 'Email', color: 'hover:text-red-400' },
+    { icon: Mail, href: 'mailto:gowri.d.tech@gmail.com', label: 'Email', color: 'hover:text-red-400' },
   ]
 
   return (
@@ -195,6 +221,17 @@ const Contact = () => {
                   </span>
                 )}
               </motion.button>
+
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-300 text-sm"
+                >
+                  <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                  <span>{error}</span>
+                </motion.div>
+              )}
             </form>
           </motion.div>
         </div>
