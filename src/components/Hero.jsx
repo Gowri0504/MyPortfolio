@@ -47,7 +47,7 @@ const Hero = () => {
   const socialLinks = [
     { icon: Github, href: 'https://github.com/Gowri0504', label: 'GitHub' },
     { icon: Linkedin, href: 'https://www.linkedin.com/in/gowri-dharmaraj/', label: 'LinkedIn' },
-    { icon: Code2, href: 'https://leetcode.com/u/gowri_d/', label: 'LeetCode' },
+    { icon: Code2, href: 'https://leetcode.com/u/Gowri0504/', label: 'LeetCode' },
     { icon: Mail, href: 'mailto:gowri.d.tech@gmail.com', label: 'Email' },
   ]
 
