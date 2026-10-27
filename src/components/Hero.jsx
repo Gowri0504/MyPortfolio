@@ -1,11 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, ExternalLink, Download, Code2, Brain, Layers, Target } from 'lucide-react'
+import {
+  Github,
+  Linkedin,
+  Mail,
+  Download,
+  ArrowRight,
+  Terminal,
+  MapPin,
+  Sparkles,
+  Code2,
+  Brain,
+  Layers,
+  Target,
+} from 'lucide-react'
+import { asset } from '../lib/asset'
 
 const Hero = () => {
-  const [currentText, setCurrentText] = useState('')
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isDeleting, setIsDeleting] = useState(false)
+  const [text, setText] = useState('')
+  const [index, setIndex] = useState(0)
+  const [deleting, setDeleting] = useState(false)
 
   const roles = [
     'Full Stack Developer',
@@ -15,31 +29,30 @@ const Hero = () => {
   ]
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      const currentRole = roles[currentIndex]
+    const full = roles[index]
+    let delay = deleting ? 45 : 75
+    if (!deleting && text === full) delay = 1600
+    if (deleting && text === '') delay = 350
 
-      if (!isDeleting) {
-        if (currentText.length < currentRole.length) {
-          setCurrentText(currentRole.substring(0, currentText.length + 1))
-        } else {
-          setTimeout(() => setIsDeleting(true), 2000)
-        }
-      } else {
-        if (currentText.length > 0) {
-          setCurrentText(currentText.substring(0, currentText.length - 1))
-        } else {
-          setIsDeleting(false)
-          setCurrentIndex((prev) => (prev + 1) % roles.length)
-        }
+    const timer = setTimeout(() => {
+      if (!deleting && text === full) {
+        setDeleting(true)
+        return
       }
-    }, isDeleting ? 40 : 60)
+      if (deleting && text === '') {
+        setDeleting(false)
+        setIndex((prev) => (prev + 1) % roles.length)
+        return
+      }
+      setText(deleting ? full.slice(0, text.length - 1) : full.slice(0, text.length + 1))
+    }, delay)
 
-    return () => clearTimeout(timeout)
-  }, [currentText, isDeleting, currentIndex])
+    return () => clearTimeout(timer)
+  }, [text, deleting, index])
 
   const stats = [
-    { icon: Code2, label: 'Major Projects', value: '4+' },
-    { icon: Brain, label: 'Technologies', value: '10+' },
+    { icon: Code2, label: 'Projects', value: '6+' },
+    { icon: Brain, label: 'Technologies', value: '15+' },
     { icon: Target, label: 'CGPA', value: '8.0' },
     { icon: Layers, label: 'Graduate', value: '2027' },
   ]
@@ -51,190 +64,231 @@ const Hero = () => {
     { icon: Mail, href: 'mailto:gowri.d.tech@gmail.com', label: 'Email' },
   ]
 
+  const marqueeItems = [
+    'React', 'Node.js', 'TypeScript', 'Java', 'Spring Boot', 'Python', 'Django',
+    'MongoDB', 'PostgreSQL', 'Redis', 'Docker', 'AWS', 'OpenAI API', 'Tailwind CSS',
+  ]
+
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center pt-20 pb-12 md:pb-16 px-4 relative">
-      <div className="max-w-7xl mx-auto w-full">
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
-          {/* Content */}
+    <section id="home" className="relative px-4 pb-14 pt-24 sm:pt-28">
+      <div className="mx-auto w-full max-w-7xl">
+        <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-2 lg:gap-14">
+          {/* ---------------- Content ---------------- */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center lg:text-left space-y-6 md:space-y-8"
+            className="order-2 space-y-7 text-center lg:order-1 lg:text-left"
           >
-            {/* Heading */}
-            <div className="space-y-3 md:space-y-4">
-              <motion.p
+            <div className="space-y-4">
+              <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-primary-light text-base md:text-lg font-medium"
+                transition={{ delay: 0.15 }}
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 backdrop-blur"
               >
-                Hello, I'm
-              </motion.p>
+                <Sparkles className="h-3.5 w-3.5 text-primary-light" />
+                <span className="font-mono text-xs tracking-wide text-gray-300">
+                  Hello, I'm
+                </span>
+              </motion.div>
+
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold"
+                transition={{ delay: 0.25 }}
+                className="font-display text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl"
               >
-                Gowri <span className="gradient-text">D</span>
+                Gowri <span className="gradient-text-animated">D</span>
               </motion.h1>
 
-              {/* Typing Animation */}
-              <div className="h-8 md:h-10 text-xl md:text-2xl lg:text-3xl font-medium text-gray-300">
-                <span>{currentText}</span>
-                <span className="animate-pulse">|</span>
+              <div className="flex h-8 items-center justify-center gap-2 font-mono text-base text-gray-300 sm:h-9 sm:text-lg md:text-2xl lg:justify-start">
+                <Terminal className="h-4 w-4 flex-shrink-0 text-mint sm:h-5 sm:w-5" />
+                <span className="whitespace-nowrap">{text}</span>
+                <span className="inline-block h-5 w-[2px] flex-shrink-0 animate-blink bg-primary-light sm:h-6 md:h-7" />
               </div>
             </div>
 
-            {/* Description */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-base md:text-lg text-gray-400 max-w-xl mx-auto lg:mx-0 leading-relaxed"
+              className="mx-auto max-w-xl text-base leading-relaxed text-gray-400 lg:mx-0 lg:text-lg"
             >
-              I build scalable AI-powered web applications focused on real-world problem solving,
-              placement preparation systems, analytics dashboards, and modern user experiences.
+              I design and build scalable AI-powered web applications — from placement
+              preparation platforms and analytics dashboards to secure full-stack products —
+              with clean architecture, strong APIs and polished user experiences.
             </motion.p>
 
-            {/* Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start"
+              className="flex flex-col justify-center gap-3 sm:flex-row lg:justify-start"
             >
-              <motion.a
-                href="#projects"
-                className="btn-primary text-sm md:text-base"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Code2 className="w-4 h-4 md:w-5 md:h-5" />
-                View AI Projects
-              </motion.a>
-              <motion.a
-                href="Resume.pdf"
+              <a href="#projects" className="btn-primary text-sm md:text-base">
+                <Code2 className="h-4 w-4 md:h-5 md:w-5" />
+                View Projects
+                <ArrowRight className="h-4 w-4" />
+              </a>
+              <a
+                href={asset('Resume.pdf')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-outline text-sm md:text-base"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
               >
-                <Download className="w-4 h-4 md:w-5 md:h-5" />
+                <Download className="h-4 w-4 md:h-5 md:w-5" />
                 Download Resume
-              </motion.a>
+              </a>
             </motion.div>
 
-            {/* Social Links */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="flex gap-3 md:gap-4 justify-center lg:justify-start pt-4 md:pt-6"
+              className="flex justify-center gap-3 pt-2 lg:justify-start"
             >
-              {socialLinks.map((social, index) => (
-                <motion.a
+              {socialLinks.map((social) => (
+                <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.7 + index * 0.1 }}
-                  className="p-2.5 md:p-3 rounded-lg glass-light hover:glass transition-all duration-300 group"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.9 }}
                   aria-label={social.label}
+                  className="group rounded-xl border border-white/10 bg-white/[0.04] p-3 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:bg-primary/10 hover:shadow-glow"
                 >
-                  <social.icon className="w-4 h-4 md:w-5 md:h-5 text-gray-400 group-hover:text-primary-light transition-colors" />
-                </motion.a>
+                  <social.icon className="h-5 w-5 text-gray-400 transition-colors group-hover:text-primary-light" />
+                </a>
               ))}
             </motion.div>
 
-            {/* Stats Cards */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-              className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 pt-6 md:pt-8"
+              transition={{ delay: 0.7 }}
+              className="grid grid-cols-2 gap-3 pt-4 sm:grid-cols-4"
             >
-              {stats.map((stat, index) => (
-                <motion.div
+              {stats.map((stat) => (
+                <div
                   key={stat.label}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.9 + index * 0.1 }}
-                  className="glass-light p-3 md:p-4 rounded-xl text-center hover:border-primary/30 transition-all duration-300"
+                  className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-center backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-primary/40"
                 >
-                  <stat.icon className="w-5 h-5 md:w-6 md:h-6 mx-auto mb-1.5 md:mb-2 text-primary-light" />
-                  <div className="text-xl md:text-2xl font-bold gradient-text">{stat.value}</div>
-                  <div className="text-xs text-gray-400 mt-0.5 md:mt-1">{stat.label}</div>
-                </motion.div>
+                  <stat.icon className="mx-auto mb-2 h-5 w-5 text-primary-light" />
+                  <div className="gradient-text text-xl font-bold md:text-2xl">{stat.value}</div>
+                  <div className="mt-0.5 text-[11px] uppercase tracking-wider text-gray-500">
+                    {stat.label}
+                  </div>
+                </div>
               ))}
             </motion.div>
           </motion.div>
 
-          {/* Profile Image Section */}
+          {/* ---------------- Passport photo ---------------- */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex justify-center lg:justify-end relative order-first lg:order-last"
+            transition={{ duration: 0.9, delay: 0.3 }}
+            className="order-1 flex justify-center lg:order-2 lg:justify-center xl:justify-end"
           >
             <div className="relative">
-              {/* Gradient Glow Background */}
+              {/* Rotating conic halo */}
+              <div className="absolute -inset-6 rounded-[2.5rem] bg-[conic-gradient(from_0deg,rgba(139,92,246,0.5),rgba(14,165,233,0.4),rgba(217,70,239,0.5),rgba(139,92,246,0.5))] opacity-40 blur-2xl animate-spin-slow" />
+
+              {/* Glow */}
               <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-primary to-secondary rounded-full blur-3xl opacity-30"
-                animate={{
-                  scale: [1, 1.1, 1],
-                  opacity: [0.3, 0.4, 0.3],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
+                className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-primary via-accent to-secondary blur-3xl"
+                animate={{ opacity: [0.25, 0.45, 0.25] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
               />
 
-              {/* Profile Image Container */}
-              <div className="relative">
-                <motion.div
-                  className="w-56 h-56 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden glow-border glass"
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{
-                    duration: 6,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                  }}
-                >
+              {/* Frame */}
+              <motion.div
+                animate={{ y: [0, -12, 0] }}
+                transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+                className="gradient-border relative overflow-hidden rounded-[2rem] p-2 shadow-soft"
+              >
+                {/* Passport size ratio (3.5 x 4.5) */}
+                <div className="relative aspect-[3.5/4.5] w-60 overflow-hidden rounded-[1.6rem] bg-slate-800 sm:w-72 md:w-80 lg:w-[20rem] xl:w-[24rem]">
                   <img
-                    src="pic.jpeg"
-                    alt="Gowri D"
-                    className="w-full h-full object-cover"
+                    src={asset('passport.png')}
+                    alt="Gowri D — professional passport size photo"
+                    className="h-full w-full object-cover object-top"
+                    loading="eager"
                   />
-                </motion.div>
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
 
-                {/* Floating Status Badge */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1 }}
-                  className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 glass px-4 py-2 md:px-6 md:py-3 rounded-full flex items-center gap-2 md:gap-3 shadow-xl"
-                >
-                  <motion.div
-                    className="w-2.5 h-2.5 md:w-3 md:h-3 bg-green-500 rounded-full shadow-[0_0_10px_rgba(34,197,94,0.6)]"
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
-                  <span className="text-xs md:text-sm font-medium whitespace-nowrap">Available for work</span>
-                </motion.div>
-              </div>
+                  {/* Name plate inside frame */}
+                  <div className="absolute inset-x-0 bottom-0 p-4">
+                    <p className="font-display text-lg font-bold text-white">Gowri D</p>
+                    <p className="font-mono text-[11px] text-primary-light">
+                      AI Application Developer
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Floating badge — availability */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1 }}
+                className="absolute -left-2 top-8 flex items-center gap-2 rounded-full border border-white/10 bg-slate-900/80 px-3 py-2 shadow-soft backdrop-blur-xl sm:-left-4 sm:px-3.5 lg:-left-6 xl:-left-8"
+              >
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-mint opacity-75" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-mint" />
+                </span>
+                <span className="whitespace-nowrap text-xs font-medium">Open to work</span>
+              </motion.div>
+
+              {/* Floating badge — location */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.15 }}
+                className="absolute -right-2 bottom-24 flex items-center gap-2 rounded-full border border-white/10 bg-slate-900/80 px-3 py-2 shadow-soft backdrop-blur-xl sm:-right-3 sm:px-3.5 lg:-right-5 xl:-right-6"
+              >
+                <MapPin className="h-3.5 w-3.5 text-secondary-light" />
+                <span className="whitespace-nowrap text-xs font-medium">Tamil Nadu, India</span>
+              </motion.div>
+
+              {/* Floating badge — focus */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.3 }}
+                className="absolute -bottom-5 left-1/2 -translate-x-1/2 rounded-full border border-white/10 bg-slate-900/80 px-4 py-2 shadow-soft backdrop-blur-xl"
+              >
+                <span className="font-mono text-xs text-gray-300">
+                  &lt;/&gt; Building with AI
+                </span>
+              </motion.div>
             </div>
           </motion.div>
         </div>
+
+        {/* ---------------- Tech marquee ---------------- */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+          className="marquee-mask mt-14 overflow-hidden border-y border-white/5 py-5 md:mt-16"
+        >
+          <div className="flex w-max animate-marquee">
+            {[0, 1].map((group) => (
+              <div key={group} className="flex shrink-0 gap-10 pr-10">
+                {marqueeItems.map((item) => (
+                  <span
+                    key={item}
+                    className="font-mono text-sm whitespace-nowrap text-gray-500 transition-colors hover:text-primary-light"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   )

@@ -1,90 +1,145 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, Heart } from 'lucide-react'
+import { Github, Linkedin, Mail, Heart, ArrowUp, Code2 } from 'lucide-react'
 
 const Footer = () => {
   const socialLinks = [
     { icon: Github, href: 'https://github.com/Gowri0504', label: 'GitHub' },
     { icon: Linkedin, href: 'https://www.linkedin.com/in/gowri-dharmaraj/', label: 'LinkedIn' },
-    { icon: Mail, href: 'mailto:gowrid.23it@kongu.edu', label: 'Email' },
+    { icon: Code2, href: 'https://leetcode.com/u/Gowri0504/', label: 'LeetCode' },
+    { icon: Mail, href: 'mailto:gowri.d.tech@gmail.com', label: 'Email' },
   ]
 
+  const quickLinks = [
+    { label: 'Home', id: 'home' },
+    { label: 'About', id: 'about' },
+    { label: 'Projects', id: 'projects' },
+    { label: 'Skills', id: 'skills' },
+    { label: 'Contact', id: 'contact' },
+  ]
+
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
+
+  const scrollToSection = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
-    <footer className="relative z-10 border-t border-slate-800/50">
-      <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
-        <div className="flex flex-col items-center">
-          {/* Logo */}
+    <footer className="relative z-10 border-t border-white/10 bg-slate-950/50 backdrop-blur-xl">
+      <div className="mx-auto max-w-7xl px-4 py-12 md:py-16">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr]">
+          {/* Brand */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="text-2xl md:text-3xl font-display font-bold gradient-text mb-4 md:mb-6"
           >
-            Gowri D
+            <div className="flex items-center gap-2">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary font-display text-sm font-bold text-white">
+                GD
+              </span>
+              <span className="font-display text-xl font-bold gradient-text">Gowri D</span>
+            </div>
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-gray-400">
+              AI Application Developer & Full Stack Engineer — building scalable, intelligent
+              products with clean architecture and thoughtful design.
+            </p>
+
+            <div className="mt-5 flex gap-3">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                  className="group rounded-xl border border-white/10 bg-white/[0.03] p-2.5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:bg-primary/10"
+                >
+                  <social.icon className="h-4 w-4 text-gray-400 transition-colors group-hover:text-primary-light" />
+                </a>
+              ))}
+            </div>
           </motion.div>
 
-          {/* Tagline */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            viewport={{ once: true }}
-            className="text-sm md:text-base text-gray-400 text-center mb-4 md:mb-6"
-          >
-            Building AI-Powered Experiences
-          </motion.p>
-
-          {/* Social Links */}
+          {/* Quick links */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             viewport={{ once: true }}
-            className="flex gap-3 md:gap-4 mb-6 md:mb-8"
           >
-            {socialLinks.map((social, index) => (
-              <motion.a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, scale: 0 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.3 + index * 0.1 }}
-                viewport={{ once: true }}
-                className="p-2.5 md:p-3 rounded-lg glass-light hover:glass transition-all duration-300 group"
-                whileHover={{ scale: 1.1, y: -3 }}
-                whileTap={{ scale: 0.9 }}
-                aria-label={social.label}
-              >
-                <social.icon className="w-4 h-4 md:w-5 md:h-5 text-gray-400 group-hover:text-primary-light transition-colors" />
-              </motion.a>
-            ))}
+            <h4 className="font-mono text-xs uppercase tracking-[0.2em] text-gray-500">
+              Navigate
+            </h4>
+            <ul className="mt-4 space-y-2.5">
+              {quickLinks.map((link) => (
+                <li key={link.id}>
+                  <button
+                    onClick={() => scrollToSection(link.id)}
+                    className="text-sm text-gray-400 transition-colors hover:text-primary-light"
+                  >
+                    {link.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
           </motion.div>
 
-          {/* Divider */}
-          <div className="w-full max-w-md h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent mb-4 md:mb-6" />
-
-          {/* Copyright */}
+          {/* Get in touch */}
           <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-center text-xs md:text-sm text-gray-500"
           >
-            <p className="flex items-center justify-center gap-1 md:gap-2">
-              Designed & Developed by{' '}
-              <span className="font-semibold gradient-text">Gowri D</span>
-            </p>
-            <p className="mt-1.5 md:mt-2 flex items-center justify-center gap-1">
-              Made with <Heart className="w-3 h-3 md:w-4 md:h-4 text-red-500 inline" /> in India
-            </p>
-            <p className="mt-1.5 md:mt-2">
-              &copy; {new Date().getFullYear()} All rights reserved.
-            </p>
+            <h4 className="font-mono text-xs uppercase tracking-[0.2em] text-gray-500">
+              Get in touch
+            </h4>
+            <ul className="mt-4 space-y-2.5 text-sm text-gray-400">
+              <li>
+                <a
+                  href="mailto:gowri.d.tech@gmail.com"
+                  className="transition-colors hover:text-primary-light"
+                >
+                  gowri.d.tech@gmail.com
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://gowri0504.github.io/MyPortfolio/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors hover:text-primary-light"
+                >
+                  gowri0504.github.io/MyPortfolio
+                </a>
+              </li>
+              <li>Tamil Nadu, India</li>
+            </ul>
+
+            <button
+              onClick={scrollToTop}
+              className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-medium text-gray-300 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:text-white"
+            >
+              <ArrowUp className="h-3.5 w-3.5" />
+              Back to top
+            </button>
           </motion.div>
+        </div>
+
+        <div className="divider-glow my-8 md:my-10" />
+
+        <div className="flex flex-col items-center justify-between gap-3 text-center md:flex-row md:text-left">
+          <p className="flex items-center gap-1.5 font-mono text-xs text-gray-500">
+            Designed &amp; developed by
+            <span className="gradient-text font-semibold">Gowri D</span>
+            <span className="mx-1 text-gray-700">·</span>
+            Made with <Heart className="h-3.5 w-3.5 text-rose-500" /> in India
+          </p>
+          <p className="font-mono text-xs text-gray-600">
+            &copy; {new Date().getFullYear()} Gowri D. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

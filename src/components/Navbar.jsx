@@ -1,31 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Download, Send } from 'lucide-react'
+import { Menu, X, Download, Send, Github } from 'lucide-react'
+import { asset } from '../lib/asset'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
-
-      const sections = ['home', 'about', 'projects', 'skills', 'contact']
-      const current = sections.find(section => {
-        const element = document.getElementById(section)
-        if (element) {
-          const rect = element.getBoundingClientRect()
-          return rect.top <= 100 && rect.bottom >= 100
-        }
-        return false
-      })
-      if (current) setActiveSection(current)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   const navItems = [
     { id: 'home', label: 'Home' },
@@ -35,170 +16,210 @@ const Navbar = () => {
     { id: 'contact', label: 'Contact' },
   ]
 
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-      setIsOpen(false)
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 24)
+
+      // Active section = last section whose top passed the offset
+      const offset = window.innerHeight * 0.28
+      let current = 'home'
+      navItems.forEach(({ id }) => {
+        const element = document.getElementById(id)
+        if (element && element.getBoundingClientRect().top <= offset) {
+          current = id
+        }
+      })
+      setActiveSection(current)
     }
+
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // Lock body scroll while the mobile drawer is open
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
+
+  const scrollToSection = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    setIsOpen(false)
   }
 
   return (
     <>
       <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-3 transition-all duration-500 ${
-          scrolled
-            ? 'glass shadow-2xl'
-            : 'bg-transparent'
-        }`}
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="fixed inset-x-0 top-0 z-50 px-4 py-3 md:px-8"
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div
+          className={`mx-auto flex max-w-7xl items-center justify-between rounded-2xl px-4 py-2.5 transition-all duration-500 md:px-5 ${
+            scrolled
+              ? 'border border-white/10 bg-slate-950/70 shadow-soft backdrop-blur-xl'
+              : 'border border-transparent bg-transparent'
+          }`}
+        >
           {/* Logo */}
-          <motion.a
-            href="#home"
-            className="text-2xl font-display font-bold gradient-text"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <button
+            onClick={() => scrollToSection('home')}
+            className="group flex items-center gap-2.5"
           >
-            Gowri D
-          </motion.a>
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary font-display text-sm font-bold text-white shadow-glow transition-transform duration-300 group-hover:scale-105">
+              GD
+            </span>
+            <span className="hidden font-display text-lg font-bold tracking-tight sm:block">
+              Gowri <span className="gradient-text">D</span>
+            </span>
+          </button>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
-            {navItems.map((item) => (
-              <motion.button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  activeSection === item.id
-                    ? 'text-primary-light'
-                    : 'text-gray-400 hover:text-gray-200'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="relative z-10">{item.label}</span>
-                {activeSection === item.id && (
-                  <motion.div
-                    layoutId="activeSection"
-                    className="absolute inset-0 bg-primary/10 rounded-lg border border-primary/20"
-                    initial={false}
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-                {activeSection === item.id && (
-                  <motion.div
-                    className="absolute -bottom-1 left-1/2 right-0 h-0.5 bg-gradient-to-r from-primary to-transparent"
-                    initial={{ scaleX: 0, x: '-50%' }}
-                    animate={{ scaleX: 1, x: '-50%' }}
-                    transition={{ duration: 0.3 }}
-                  />
-                )}
-              </motion.button>
-            ))}
-
-            {/* Buttons */}
-            <div className="flex items-center gap-2 ml-4">
-              <motion.a
-                href="Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-outline text-sm"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Download className="w-4 h-4" />
-                Resume
-              </motion.a>
-              <motion.button
-                onClick={() => scrollToSection('contact')}
-                className="btn-primary text-sm"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Send className="w-4 h-4" />
-                Let's Talk
-              </motion.button>
-            </div>
+          {/* Desktop nav */}
+          <div className="hidden items-center gap-1 lg:flex">
+            {navItems.map((item) => {
+              const isActive = activeSection === item.id
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`relative rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                    isActive ? 'text-white' : 'text-gray-400 hover:text-gray-100'
+                  }`}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="navActive"
+                      className="absolute inset-0 rounded-lg border border-primary/30 bg-primary/15"
+                      transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                    />
+                  )}
+                  <span className="relative z-10 font-mono">{item.label}</span>
+                </button>
+              )
+            })}
           </div>
 
-          {/* Mobile Menu Button */}
-          <motion.button
-            className="md:hidden p-2 text-gray-300 hover:text-white transition-colors"
-            onClick={() => setIsOpen(!isOpen)}
-            whileTap={{ scale: 0.9 }}
+          {/* Desktop actions */}
+          <div className="hidden items-center gap-2 lg:flex">
+            <a
+              href="https://github.com/Gowri0504"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="rounded-full border border-white/10 bg-white/[0.03] p-2.5 text-gray-400 transition-all duration-300 hover:border-primary/40 hover:text-primary-light"
+            >
+              <Github className="h-4 w-4" />
+            </a>
+            <a
+              href={asset('Resume.pdf')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline !px-4 !py-2.5 text-sm"
+            >
+              <Download className="h-4 w-4" />
+              Resume
+            </a>
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="btn-primary !px-4 !py-2.5 text-sm"
+            >
+              <Send className="h-4 w-4" />
+              Hire Me
+            </button>
+          </div>
+
+          {/* Mobile toggle */}
+          <button
+            className="rounded-lg p-2 text-gray-300 transition-colors hover:text-white lg:hidden"
+            onClick={() => setIsOpen(true)}
+            aria-label="Open menu"
           >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </motion.button>
+            <Menu className="h-6 w-6" />
+          </button>
         </div>
       </motion.nav>
 
-      {/* Mobile Navigation Menu */}
+      {/* Mobile drawer */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-y-0 right-0 w-72 z-50 glass shadow-2xl md:hidden"
-          >
-            <div className="flex flex-col h-full p-6 pt-20">
-              <div className="space-y-2">
-                {navItems.map((item, index) => (
-                  <motion.button
-                    key={item.id}
-                    onClick={() => scrollToSection(item.id)}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className={`w-full text-left px-4 py-3 rounded-lg transition-all ${
-                      activeSection === item.id
-                        ? 'bg-primary/10 text-primary-light border-l-2 border-primary'
-                        : 'text-gray-400 hover:bg-slate-700/30 hover:text-gray-200'
-                    }`}
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[55] bg-slate-950/70 backdrop-blur-sm lg:hidden"
+              onClick={() => setIsOpen(false)}
+            />
+            <motion.aside
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 28, stiffness: 240 }}
+              className="fixed inset-y-0 right-0 z-[56] w-72 border-l border-white/10 bg-slate-950/95 backdrop-blur-xl lg:hidden"
+            >
+              <div className="flex h-full flex-col p-6">
+                <div className="mb-8 flex items-center justify-between">
+                  <span className="font-mono text-xs uppercase tracking-[0.2em] text-gray-500">
+                    Menu
+                  </span>
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    aria-label="Close menu"
+                    className="rounded-lg p-2 text-gray-400 transition-colors hover:text-white"
                   >
-                    {item.label}
-                  </motion.button>
-                ))}
-              </div>
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
 
-              <div className="mt-8 space-y-3">
-                <motion.a
-                  href="Resume.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="btn-outline w-full justify-center"
-                >
-                  <Download className="w-4 h-4" />
-                  Resume
-                </motion.a>
-                <motion.button
-                  onClick={() => scrollToSection('contact')}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                  className="btn-primary w-full justify-center"
-                >
-                  <Send className="w-4 h-4" />
-                  Let's Talk
-                </motion.button>
-              </div>
+                <div className="space-y-1.5">
+                  {navItems.map((item, index) => (
+                    <motion.button
+                      key={item.id}
+                      onClick={() => scrollToSection(item.id)}
+                      initial={{ opacity: 0, x: 24 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.06 }}
+                      className={`w-full rounded-xl px-4 py-3 text-left font-mono text-sm transition-all ${
+                        activeSection === item.id
+                          ? 'border border-primary/30 bg-primary/10 text-primary-light'
+                          : 'text-gray-400 hover:bg-white/5 hover:text-gray-100'
+                      }`}
+                    >
+                      {item.label}
+                    </motion.button>
+                  ))}
+                </div>
 
-              <motion.button
-                className="absolute top-4 right-4 p-2 text-gray-400 hover:text-white"
-                onClick={() => setIsOpen(false)}
-                whileTap={{ scale: 0.9 }}
-              >
-                <X className="w-6 h-6" />
-              </motion.button>
-            </div>
-          </motion.div>
+                <div className="mt-8 space-y-3">
+                  <a
+                    href={asset('Resume.pdf')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-outline w-full justify-center text-sm"
+                  >
+                    <Download className="h-4 w-4" />
+                    Resume
+                  </a>
+                  <button
+                    onClick={() => scrollToSection('contact')}
+                    className="btn-primary w-full justify-center text-sm"
+                  >
+                    <Send className="h-4 w-4" />
+                    Let's Talk
+                  </button>
+                </div>
+
+                <p className="mt-auto font-mono text-[11px] text-gray-600">
+                  gowri.d.tech@gmail.com
+                </p>
+              </div>
+            </motion.aside>
+          </>
         )}
       </AnimatePresence>
     </>
